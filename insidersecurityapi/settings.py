@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-gpqnn_s@r9t_t-dlrdcz3k-t@!1ylff7)2($(snja7fb5dscej
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*", 'insidersecurityapi-production.up.railway.app', "127.0.0.1"]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
