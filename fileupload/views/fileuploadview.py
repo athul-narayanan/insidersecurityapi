@@ -100,13 +100,13 @@ class FileUploadView(generics.GenericAPIView):
                 filepath = str(time.time()) + "malicious_rows.xlsx" 
                 output_path = os.path.join(settings.MEDIA_ROOT, filepath )
 
-                # Save to Excel
+                # Save the malicious records into excel
                 malicious_df.to_excel(output_path, index=False)
 
-                # Optionally, convert to JSON
+                # Convert malicious records into JSON
                 malicious_json = malicious_df.to_dict(orient="records")
 
-                # Add this in your view's return statement:
+                # Create the response to return
                 return Response({
                     'malicious_rows': malicious_json,
                     'excel_path': filepath
