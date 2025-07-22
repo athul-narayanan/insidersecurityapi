@@ -115,3 +115,19 @@ def generate_sequence(df):
     X_test_tensor = torch.tensor(X_test, dtype=torch.float32).to(device)
 
     return X_test_tensor, device
+
+def findunique(malicious_json, top_festure):
+    map = {}
+    filtered_data = []
+    filtered_features = []
+    for mal_row, topfeature in zip(malicious_json, top_festure):
+        key = mal_row["from"] + mal_row["date"].strftime("%Y-%m-%d %H:%M:%S")
+        if key in map:
+            continue
+
+        filtered_data.append(mal_row)
+        filtered_features.append(topfeature)
+        map[key] = 1
+    
+    return filtered_data, filtered_features
+
