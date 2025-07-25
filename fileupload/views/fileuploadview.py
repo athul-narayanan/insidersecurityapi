@@ -170,7 +170,8 @@ class FileUploadView(generics.GenericAPIView):
 
                     for item in mal_row_indices[idx]:
                         top_features_list.append(top_features_each_step[0]["top_feature_per_timestep"][f't{item}']["feature"])
-                        
+
+                    print(top_features_list) 
                 # Define the output path
                 filepath = str(time.time()) + "malicious_rows.xlsx" 
                 output_path = os.path.join(settings.MEDIA_ROOT, filepath )
@@ -180,13 +181,19 @@ class FileUploadView(generics.GenericAPIView):
 
                 
                 malicious_df = pd.concat(mal_rows, axis=0).reset_index(drop=True)
-                # Save the malicious records into excel
-                malicious_df.to_excel(output_path, index=False)
-
+                
+               
                 # Convert malicious records into JSON
                 malicious_json = malicious_df.to_dict(orient="records")
 
+                
+
                 malicious_json , top_features_list = findunique(malicious_json,top_features_list)
+
+                malicious_df = pd.DataFrame([malicious_json], index=[0]) 
+
+                # Save the malicious records into excel
+                malicious_df.to_excel(output_path, index=False)
 
 
                 # Create the response to return

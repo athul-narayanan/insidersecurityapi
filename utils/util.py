@@ -16,7 +16,7 @@ def group_sort(df):
         'num_cc': 'mean',
         'num_bcc': 'mean',
         'num_words': 'mean',
-        'has_attachment': 'sum',
+        'has_attachment': 'mean',
         'O': 'mean',
         'C': 'mean',
         'E': 'mean',
@@ -68,7 +68,7 @@ def derive_features(df):
     # attachement can be used as a clear indicator of insider threat
     # keeping attachment count as it is increased the noise
 
-    df['has_attachment'] = df['attachments'].apply(lambda x: 1 if x > 0 else 0)
+    df['has_attachment'] = df['attachments']
 
     # extract the hour (0-23) and day of the mail (0=monday and 6=Sunday)
     # Insider attacks usually happend during night and off peak day ( weekend)
@@ -88,17 +88,16 @@ def normalize_features(df):
 
     print(df)
 
-    scale_cols = ['hour', 'num_to', 'num_cc', 'num_bcc', 'num_words']
+    scale_cols = ['hour', 'num_to', 'num_cc', 'num_bcc', 'num_words', 'has_attachment']
     psychometric_cols = ['O', 'C', 'E', 'A', 'N']
-    binary_cols = ['has_attachment']
 
     # Normalize the data using same scalar
     scaled_part = scaler.transform(df[scale_cols])
     scaled_psych = scaler1.transform(df[psychometric_cols])
-    unscaled_part = df[binary_cols].values
+    
 
     # Merge the data data after normalization
-    full_features = np.hstack((scaled_part, unscaled_part, scaled_psych))
+    full_features = np.hstack((scaled_part, scaled_psych))
 
     return full_features
 

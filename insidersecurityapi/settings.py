@@ -119,7 +119,7 @@ USE_I18N = True
 USE_TZ = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200", "*", "https://insidersecurity.web.app"
+    "http://localhost:4200", "https://insidersecurity.web.app"
 ]
 
 
